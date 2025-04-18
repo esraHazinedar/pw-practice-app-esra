@@ -7,11 +7,15 @@ test.beforeEach('The locatortest', async ({ page }) => {
 
 })
 
-test.describe('Form Layouts Page', () => {
+test.describe.only('Form Layouts Page', () => {
+//if my test is flaky , I can configure to run two times locally with the following line
+    test.describe.configure({retries:2})
 
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page },testInfo) => {
 
-
+if(testInfo.retry){
+    //if the test fails you can provide conditon for example to clear the database before the next run 
+}
         await page.getByText('Forms').click()
 
         await page.getByText('Form Layouts').click()
