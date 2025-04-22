@@ -29,3 +29,7 @@ we candle these comments by placing them in package.json() file
   now it was added into the framework
   we need to import it into our class
 import {faker} from '@faker-js/faker'
+
+
+ın order to read to data env. file we need to import the library from dot.env npm and coopy the link sample "npm i dotenv"
+ann pass this command in the terminal : npm i dotenv --save-dev --force to install

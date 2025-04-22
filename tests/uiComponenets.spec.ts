@@ -1,20 +1,24 @@
 import { test, expect } from '@playwright/test';
-
+// you want to run the tests in this file in parallel
+//test.describe.configure({mode:'parallel'})
+//test.describe.configure({mode:'serial'}) execute one byon e
 test.beforeEach('The locatortest', async ({ page }) => {
 
-    await page.goto("http://localhost:4200/")
+    await page.goto('/')
+    await page.getByText('Forms').click()
 
+    await page.getByText('Form Layouts').click()
 
 })
 
-test.describe.only('Form Layouts Page', () => {
+test ('Form Layouts Page', () => {
 //if my test is flaky , I can configure to run two times locally with the following line
-    test.describe.configure({retries:2})
+    test.describe.configure({retries:0})
 
     test.beforeEach(async ({ page },testInfo) => {
 
 if(testInfo.retry){
-    //if the test fails you can provide conditon for example to clear the database before the next run 
+    //if the test fails you can provide conditon for example to clear the database before
 }
         await page.getByText('Forms').click()
 
@@ -23,6 +27,38 @@ if(testInfo.retry){
 
     })
 
+})
+    test ('radio buttons',async({page})=>{
+        const usingTheGridForm = page.locator('nb-card', { hasText: "Using the Grid" })
+
+        //due to tthis value  "native-input visually-hidden" we use check method to interact 
+        // await usingTheGridEmailInput.getByLabel('Option 1').check({force:true})
+
+        //using getByRole
+
+        await usingTheGridForm.getByRole('radio', { name: "Option 2" }).check({ force: true })
+        await expect(usingTheGridForm).toHaveScreenshot()
+
+
+        // const radioStatus = await usingTheGridForm.getByRole('radio', { name: "Option 1" }).isChecked()
+
+        // expect(radioStatus).toBeTruthy()
+
+        // //locator assertion
+
+        // expect(usingTheGridForm.getByRole('radio', { name: "Option 1" })).toBeChecked()
+
+
+
+        // await usingTheGridForm.getByRole('radio', { name: "Option 2" }).check({ force: true })
+
+        // //validating when the option 2 was selected option1 was deselected
+
+        // // you should provide the entire locator as an arguement
+
+        // expect(await usingTheGridForm.getByRole('radio', { name: "Option 1" }).isChecked()).toBeFalsy
+        // expect(await usingTheGridForm.getByRole('radio', { name: "Option 2" }).isChecked()).toBeTruthy
+    })
 
     test('input fields', async ({ page }) => {
 
@@ -46,45 +82,6 @@ if(testInfo.retry){
 
     })
 
-
-    test('radio buttons', async ({ page }) => {
-
-        const usingTheGridForm = page.locator('nb-card', { hasText: "Using the Grid" })
-
-        //due to tthis value  "native-input visually-hidden" we use check method to interact 
-        // await usingTheGridEmailInput.getByLabel('Option 1').check({force:true})
-
-        //using getByRole
-
-        await usingTheGridForm.getByRole('radio', { name: "Option 1" }).check({ force: true })
-
-
-        const radioStatus = await usingTheGridForm.getByRole('radio', { name: "Option 1" }).isChecked()
-
-        expect(radioStatus).toBeTruthy()
-
-        //locator assertion
-
-        expect(usingTheGridForm.getByRole('radio', { name: "Option 1" })).toBeChecked()
-
-
-
-        await usingTheGridForm.getByRole('radio', { name: "Option 2" }).check({ force: true })
-
-        //validating when the option 2 was selected option1 was deselected
-
-        // you should provide the entire locator as an arguement
-
-        expect(await usingTheGridForm.getByRole('radio', { name: "Option 1" }).isChecked()).toBeFalsy
-        expect(await usingTheGridForm.getByRole('radio', { name: "Option 2" }).isChecked()).toBeTruthy
-
-    })
-
-
-
-
-
-})
 
 //if the test is in the different page we created the test outside of the describe block
 

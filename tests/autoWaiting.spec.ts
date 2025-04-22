@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test';
+import { timeout } from 'rxjs/operators';
 
 test.beforeEach('new',async({page},testInfo)=>{
 
-await page.goto("http://uitestingplayground.com/ajax")
+await page.goto(process.env.URL)
 
 await page.getByText('Button Triggering AJAX Request').click()
 
@@ -26,7 +27,7 @@ const text  = await succesButoon.allTextContents()
 
 expect(text).toContain('Data loaded with AJAX get request.') //used contain cause the return type is array not a string 
 
-await expect(succesButoon).toHaveText('Data loaded with AJAX get request.',{timeout:20000})
+await expect(succesButoon).toHaveText('Data loaded with AJAX get request.',{timeout:5000})
 
 })
 

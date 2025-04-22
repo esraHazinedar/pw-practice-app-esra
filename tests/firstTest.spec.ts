@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test.beforeEach('The locatortest',async({page})=>{
 
-await page.goto("http://localhost:4200/")
+await page.goto('/')
 
 await page.getByText('Forms').click()
 

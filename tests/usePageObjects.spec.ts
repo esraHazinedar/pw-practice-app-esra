@@ -6,7 +6,7 @@ import {faker} from '@faker-js/faker'
 //import { DatePickerPage } from '../page-objects/datePickerPage';
 test.beforeEach('The locatortest', async ({ page }) => {
 
-    await page.goto("http://localhost:4200/")
+    await page.goto('/')
 
 
 
@@ -41,10 +41,16 @@ test('parameterized methods',async({page})=>{
 
     await pm.navigateTo.formLayOutsPage()
 
-    await pm.onFormLayoutPage.submitUsingTheGridFormWithCredentialsAndSElectionOption('esra@gmail.com','657585','Option 2')
+    await pm.onFormLayoutPage.submitUsingTheGridFormWithCredentialsAndSElectionOption(process.env.USERNAME,process.env.PASSWORD,'Option 2')
+//we can create a screenshot folder in the project
+    await page.screenshot({path:'home/formslayoutPage.png'})
 
     await pm.onFormLayoutPage.submitInLİneFormWithNameEmailAndCheckbox(randomFullName,randomEmail,true)
-
+    //we can just tkae a screen shot of a specif place elemenet
+    await page.locator('nb-card', { hasText: "Inline form" }).screenshot({path:'home/inlineform.png'})
+    //we can send the binary to others
+    const buffer = await page.screenshot()
+    console.log(buffer.toString('base64'))
      await pm.navigateTo.datePickerPage()
 
      await pm.onDatepickerPage.selectCommonDatePickerDateFromToday(10)
@@ -52,6 +58,19 @@ test('parameterized methods',async({page})=>{
      await pm.onDatepickerPage.selectDatePickerWithRangeFromToday(17,20)
 
 })
+
+
+
+
+test.only('testing with argos CI', async ({ page }) => {
+    const pm = new PageManager(page)
+   
+    
+     await pm.navigateTo.formLayOutsPage()
+ 
+     await pm.navigateTo.datePickerPage()
+     
+ })
 
 /**
  * NPM TERMİNAL COMMENTS
