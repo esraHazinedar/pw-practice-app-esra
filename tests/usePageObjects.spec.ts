@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { PageManager } from '../page-objects/pageManager';
 import {faker} from '@faker-js/faker'
+import { argosScreenshot } from "@argos-ci/playwright";
 //import { NavigationPage } from '../page-objects/navigationPage';  //we need to import navigation page class
 //import { FormLayOutsPage } from '../page-objects/formLayoutsPage';
 //import { DatePickerPage } from '../page-objects/datePickerPage';
@@ -67,8 +68,10 @@ test.only('testing with argos CI', async ({ page }) => {
    
     
      await pm.navigateTo.formLayOutsPage()
+     await argosScreenshot(page, "form layout page");
  
      await pm.navigateTo.datePickerPage()
+     await argosScreenshot(page, "datepicker page");
      
  })
 

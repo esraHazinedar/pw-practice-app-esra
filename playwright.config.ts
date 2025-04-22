@@ -20,7 +20,19 @@ export default defineConfig<TestOptions>({
  
   retries: process.env.CI ? 1 : 0,
   /* Opt out of parallel tests on CI. */
-  reporter: 'html',
+  reporter: [
+    process.env.CI ? ["dot"] : ["list"],
+    [
+      "@argos-ci/playwright/reporter",
+      {
+        // Upload to Argos on CI only.
+        uploadToArgos: !!process.env.CI,
+       
+      },
+    ],
+  
+  ['html']
+],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     globalsQURL :'https://www.globalsqa.com/demo-site/draganddrop/',
@@ -32,6 +44,7 @@ export default defineConfig<TestOptions>({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    screenshot: "only-on-failure",
     actionTimeout: 5000,
     navigationTimeout:5000,
     video:{
