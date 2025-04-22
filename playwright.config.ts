@@ -86,9 +86,10 @@ export default defineConfig<TestOptions>({
     }
   ],
   webServer :{
-    command: 'npm run build',
+    command: 'npm run start',
     url:'http://localhost:4200/',
     reuseExistingServer: !process.env.CI,
+    timeout: 120000,
   }
     
    
