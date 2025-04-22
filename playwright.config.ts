@@ -86,9 +86,9 @@ export default defineConfig<TestOptions>({
     }
   ],
   webServer :{
-    command: 'npm run start',
+    command: 'npm run build',
     url:'http://localhost:4200/',
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
   }
     
    
